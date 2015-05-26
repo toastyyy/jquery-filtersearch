@@ -1,0 +1,137 @@
+body, html { padding: 0; margin: 0; font-family: Arial, sans-serif; background-color: #fafafa; }
+.container {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+main {
+	width: 75%;
+	float: left;
+}
+
+aside {
+	width: 25%;
+	float: left;
+}
+
+/* Styling the sorting columns */
+#sort-columns>ul {
+	list-style: none;
+	padding: 0;
+}
+
+#sort-columns>ul>li {
+	padding: 10px 28px 10px 14px;
+	border-radius: 4px;
+	display: inline-block;
+	margin: 0px 14px;
+	cursor: pointer;
+	background-position: right 8px center;
+	background-size: 8px auto;
+	background-repeat: no-repeat;
+}
+
+#sort-columns>ul>li:hover {
+	background-color: #ededed;
+}
+
+#sort-columns>ul>li.asc {
+	background-color: #2a6893;
+	color: #fff;
+	background-image: url(asc.png);
+}
+
+#sort-columns>ul>li.desc {
+	background-color: #2a6893;
+	color: #fff;
+	background-image: url(desc.png);
+}
+
+/* Styling search results */
+.search-result {
+	background-color: #fff;
+	padding: 6px;
+	border-radius: 4px;
+	box-shadow: 0px 0px 5px #888;
+	margin-bottom: 20px;
+}
+
+.search-result h2 {
+	margin: 0px;
+}
+
+/* Pagination */
+
+#pagination-container ul {
+	list-style: none;
+	width: 100%;
+	text-align: center;
+}
+
+#pagination-container ul>li {
+	height: 40px;
+	background-color: #fff;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	line-height: 40px;
+	display: inline-block;
+	width: 40px;
+	cursor: pointer;
+}
+
+#pagination-container ul>li.active {
+	background-color: #2a6893;
+	color: #fff;
+}
+
+#pagination-container ul>li:first-of-type {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-left: 1px solid #ddd;
+}
+
+#pagination-container ul>li:last-of-type {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-right: 1px solid #ddd;
+}
+
+/* Filter column */
+
+#filter-container {
+	padding-left: 10px;
+}
+#filter-container>ul {
+	list-style: none;
+	padding: 0;
+}
+
+#filter-container>ul>li>strong {
+	display: inline-block;
+	height: 35px;
+	color: #fff;
+	line-height: 35px;
+	padding: 0px 10px;
+	width: 100%;
+	background-color: #2a6893;
+}
+
+#filter-container>ul>li>ul {
+	padding-left: 0px;
+	list-style: none;
+}
+
+#filter-container>ul>li>ul>li {
+	height: 24px;
+	line-height: 24px;
+	color: #589fd0;
+}
+
+#filter-container>ul>li>ul>li:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#filter-container>ul>li>ul>li.active {
+	color: #333;
+}

@@ -1,21 +1,34 @@
 <html>
 	<head>
-		
+		<meta charset="UTF-8">
+		<link href="demo.css" type="text/css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id="sort-columns"></div>
-		<div id="search-results"></div>
-		<div id="filter-container"></div>
-		<div id="pagination-container"></div>
+		<div class="container">
+			<main>
+				<div id="sort-columns"></div>
+				<div id="search-results"></div>
+				<div id="pagination-container"></div>
+			</main>
+			<aside>
+				<div id="filter-container"></div>
+			</aside>
+		</div>
 		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="jquery.filtersearch.min.js"></script>
 		
 		<script>
 			var data = [
-				{ name : "Product A", description : "Lorem Ipsum dolor sit amet.", price : 23.99, category : "allgemein", pricecategory : "unter 25€", tags : ["toll", "klasse", "wahnsinn", "gut"] },
-				{ name : "Product B", description : "Ipsum dolor sit amet Lorem.", price : 29.95, category : "allgemein", pricecategory : "unter 50€", tags : ["schlecht", "klasse", "gut", "teuer"] },
-				{ name : "Product C", description : "Lorem Ipsum dolor sit amet.", price : 18.99, category : "speziell", pricecategory : "unter 25€", tags : ["toll", "gut"] },
-				{ name : "Thermofix", description : "Lorem Ipsum dolor sit amet.", price : 899.99, category : "allgemein", pricecategory : "schweine teuer", tags : ["teuer", "gut"] },
+				{ name : "Product A", description : "Lorem Ipsum dolor sit amet.", price : 23.99, category : "general", pricecategory : "under 25€", tags : ["great", "super", "crazy", "good"] },
+				{ name : "Product B", description : "Ipsum dolor sit amet Lorem.", price : 29.95, category : "general", pricecategory : "under 50€", tags : ["bad", "super", "good", "expensive"] },
+				{ name : "Product C", description : "Lorem Ipsum dolor sit amet.", price : 18.99, category : "special", pricecategory : "under 25€", tags : ["great", "good"] },
+				{ name : "Thermofix", description : "Lorem Ipsum dolor sit amet.", price : 899.99, category : "general", pricecategory : "very expensive", tags : ["expensive", "good"] },
+				{ name : "Product D", description : "Lorem Ipsum dolor sit amet.", price : 2.99, category : "special", pricecategory : "cheap", tags : ["cheap", "good", "lorem"] },
+				{ name : "Product E", description : "Lorem Ipsum dolor sit amet.", price : 1299.99, category : "general", pricecategory : "very expensive", tags : ["lorem", "good"] },
+				{ name : "Product F", description : "Lorem Ipsum dolor sit amet.", price : 2899.99, category : "professional", pricecategory : "very expensive", tags : ["expensive", "good"] },
+				{ name : "Product G", description : "Lorem Ipsum dolor sit amet.", price : 22.95, category : "professional", pricecategory : "under 25€", tags : ["cheap", "bad"] },
+				{ name : "Product H", description : "Lorem Ipsum dolor sit amet.", price : 599.47, category : "special", pricecategory : "under 600€", tags : ["cheap", "good"] },
+				{ name : "Product I", description : "Lorem Ipsum dolor sit amet.", price : 679.99, category : "professional", pricecategory : "expensive", tags : ["expensive", "bad"] },
 			];
 			
 			
@@ -24,25 +37,27 @@
 				
 				renderItem: function(item) {
 					var markup = "";
+					markup += '<div class="search-result">'
 					markup += "<h2>"+item.name+"</h2>";
 					markup += "<em>" + item.description + "</em><br>";
-					markup += "<strong>" + item.price + "</strong><br>";
+					markup += "<strong>" + item.price + " €</strong><br>";
 					for(var s in item.tags) {
 						markup += item.tags[s] + ", ";
 					}
+					markup += '</div>';
 					return markup;
 				},
 				
-				sortColumns: [{ property : "name", label : "Produktname" }, { property : "price", label : "Preis" }],
+				sortColumns: [{ property : "name", label : "Product name" }, { property : "price", label : "Price" }],
 				sortContainer : "#sort-columns",
 				
-				filterColumns: [{ property : "category", label : "Kategorie", logic : "or" }, 
-								{ property : "pricecategory", label : "Preiskategorie", logic : "xor" },
+				filterColumns: [{ property : "category", label : "Category", logic : "or" }, 
+								{ property : "pricecategory", label : "Price category", logic : "xor" },
 								{ property : "tags", label : "Tags", logic : "and" }],
 				filterContainer : "#filter-container",
 				
 				
-				pagination : 2,
+				pagination : 4,
 				paginationContainer : "#pagination-container"
 			});
 	

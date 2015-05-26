@@ -23,15 +23,14 @@
 		
 		this.renderResults = function() {
 			if(pagination > 0) {
-				var pagenum = parseInt(filtered_data.length / pagination);
+				var pagenum = Math.ceil(parseFloat(filtered_data.length) / pagination);
 				var p = '<ul class="pagination">';
 				for(var i = 1; i <= pagenum; i++) {
 					if(curpage == i) {
 						p += '<li data-page="'+i+'" class="active">'+i+'</li>';
 					} else {
 						p += '<li data-page="'+i+'">'+i+'</li>';
-					}
-					
+					}	
 				}
 				p += '</ul>';
 				$(paginationContainer).html(p);
@@ -42,7 +41,7 @@
 			}
 			var markup = "";
 			if(pagination > 0) {
-				for(var i = (curpage - 1) * pagination; i <= Math.min(curpage * pagination - 1, filtered_data.length); i++) {
+				for(var i = (curpage - 1) * pagination; i <= Math.min(curpage * pagination - 1, filtered_data.length - 1); i++) {
 					markup += renderItem(filtered_data[i]);
 				}
 			} else {
