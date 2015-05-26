@@ -44,6 +44,8 @@ This jQuery plugin provides a basic functionality to view and manipulate a searc
 You can pass filter columns via the `filterColumns` option during initialization.
 Each Filter object consists of 3 properties:
 
+Filtering works even on attributes that are arrays! But only with depth 1.
+
 #### Property
 The property to filter. This plugin automatically aggregates all possible value for this attribute and even displays the amount of matches next to the filter-value.
 
