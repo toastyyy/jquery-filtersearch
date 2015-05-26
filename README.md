@@ -77,3 +77,5 @@ propertyList = {
 }
 ```
 
+# Bugs
+Please report any bug you see or fix it yourself and contribute :-)
