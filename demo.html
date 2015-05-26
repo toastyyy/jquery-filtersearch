@@ -1,0 +1,51 @@
+<html>
+	<head>
+		
+	</head>
+	<body>
+		<div id="sort-columns"></div>
+		<div id="search-results"></div>
+		<div id="filter-container"></div>
+		<div id="pagination-container"></div>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="jquery.filtersearch.min.js"></script>
+		
+		<script>
+			var data = [
+				{ name : "Product A", description : "Lorem Ipsum dolor sit amet.", price : 23.99, category : "allgemein", pricecategory : "unter 25€", tags : ["toll", "klasse", "wahnsinn", "gut"] },
+				{ name : "Product B", description : "Ipsum dolor sit amet Lorem.", price : 29.95, category : "allgemein", pricecategory : "unter 50€", tags : ["schlecht", "klasse", "gut", "teuer"] },
+				{ name : "Product C", description : "Lorem Ipsum dolor sit amet.", price : 18.99, category : "speziell", pricecategory : "unter 25€", tags : ["toll", "gut"] },
+				{ name : "Thermofix", description : "Lorem Ipsum dolor sit amet.", price : 899.99, category : "allgemein", pricecategory : "schweine teuer", tags : ["teuer", "gut"] },
+			];
+			
+			
+			$("#search-results").filtersearch({
+				data : data,
+				
+				renderItem: function(item) {
+					var markup = "";
+					markup += "<h2>"+item.name+"</h2>";
+					markup += "<em>" + item.description + "</em><br>";
+					markup += "<strong>" + item.price + "</strong><br>";
+					for(var s in item.tags) {
+						markup += item.tags[s] + ", ";
+					}
+					return markup;
+				},
+				
+				sortColumns: [{ property : "name", label : "Produktname" }, { property : "price", label : "Preis" }],
+				sortContainer : "#sort-columns",
+				
+				filterColumns: [{ property : "category", label : "Kategorie", logic : "or" }, 
+								{ property : "pricecategory", label : "Preiskategorie", logic : "xor" },
+								{ property : "tags", label : "Tags", logic : "and" }],
+				filterContainer : "#filter-container",
+				
+				
+				pagination : 2,
+				paginationContainer : "#pagination-container"
+			});
+	
+		</script>
+	</body>
+</html>
