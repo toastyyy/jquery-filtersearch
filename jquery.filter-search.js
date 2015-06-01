@@ -133,6 +133,10 @@
 				var property = $(this).data("filter-property");
 				$(this).children('[data-filter-value]').each(function() {
 					$(this).click(function() {
+						if(attrs[property].logic == "xor") {
+							$(this).parent().children('[data-filter-value]').removeClass("active");
+							delete filters[property];
+						}
 						$(this).toggleClass("active");
 						if($(this).hasClass("active")) {
 							if(property in filters) {
@@ -219,7 +223,7 @@
 			for(var property in filters) {
 				var filter = filters[property];
 				
-				if(filter.logic == "or") { // any of the filter must match
+				if(filter.logic == "or" || filter.logic == "xor") { // any of the filter must match
 					if(typeof itm[property] == "string") {
 						if(filter.values.indexOf(itm[property]) == -1) { addme = false; }
 					} else if (typeof itm[property] == "object") {
