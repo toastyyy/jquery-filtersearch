@@ -82,6 +82,9 @@ propertyList = {
   }
 }
 ```
+## ToDo
+- Enable loading search results via AJAX request.
+- Add search parameters that loads new results via ajax and auto-updates DOM (with loading-indicator).
 
-# Bugs
+## Bugs
 Please report any bug you see or fix it yourself and contribute :-)
