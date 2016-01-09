@@ -57,7 +57,8 @@ The value function returns a list of objects or a string that determine which va
 The title will be rendered over the list of values for the filter.
 
 Example for a filter (taken from demo):
-```{
+```
+{
 	title: "Genre",
 	compareFunction: function (obj, selectedValues) {
 		var match = false;
@@ -76,4 +77,5 @@ Example for a filter (taken from demo):
 		}
 		return obj.genres;
 	}
-}```
+}
+```
