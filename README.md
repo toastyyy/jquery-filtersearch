@@ -8,83 +8,74 @@ This jQuery plugin provides a basic functionality to view and manipulate a searc
 - Pagination
 - Sorting
 
-## Basic Usage
+## Installation
 
-- Create DOM-elements for the different functionalities
-- Activate filtersearch
+Install via bower:
 
-```html
-<div id="sort-columns"></div>
-<div id="search-results"></div>
-<div id="filter-container"></div>
-<div id="pagination-container"></div>
-<script>
-  var options = {};
-  options.data = [...];
-  options.sortContainer = "#sort-columns";
-  options.filterContainer = "#filter-container";
-  options.paginationContainer = "#pagination-container";
-  
-  $("#search-results").filtersearch(options);
-</script>
+```
+bower install toastyyy/jquery-filtersearch
 ```
 
-## Options
-- `data` contains all search results as an array of javascript objects
-- `renderItem` is a function with the parameter item, that allows custom rendering for a search result
-- `sortColumns` list of javascript objects that list properties that are sortable. Each list entry is a javascript object having the following attributes: property (the property of the item), label (label of the control for sorting)
-- `sortContainer` is the CSS-selector on which to add markup for the sort controls
-- `filterColumns` list of javascript objects that list properties that a user may filter. See section *filtering* for more info on that.
-- `filterContainer` is the CSS-selector on which to add markup for the filter controls
-- `pagination` number of search results per page. If 0, no pagination will be used. Default: 0
-- `paginationContainer` is the CSS-selector on which to add markup for the pagination control
+## Documentation
 
+A basic instance of this plugins should consist of a list of filters, sorters and of course a list of data as Javascript Objects.
+To enable filtersearch for your page, simply call the filtersearch method on your jQuery object:
 
-### Filtering
-You can pass filter columns via the `filterColumns` option during initialization.
-Each Filter object consists of 3 properties:
+```
+$("#search-results").filtersearch({
+			sortContainer: "#sorter-column",
+			paginationContainer: "#pagination-column",
+			filterContainer: "#filter-column",
+			data: data,
+			renderItem: renderItem,
+			pagination: 5,
+			filterList: filters,
+			sorterList: [],
+			preRender: function(opts) {},
+			postRender: function(opts) {}
+		});
+```
 
-- `property` the name of the property to filter
-- `label` Label for the filter category
-- `Logic` determines the filter behaviour
+- `sortContainer` is the wrapper that should contain sorter markup
+- `paginationContainer` is the wrapper that should contain pagination markup
+- `filterContainer` is the wrapper that should contain filter markup
+- `data` is the list of javascript objects that represent the search result (model)
+- `renderItem` is a custom rendering method for search results
+- `pagination` represents the number of search results per page. If set to 0, no pagination will be used
+- `filterList` is a list of filter objects
+- `sorterList` is a list of sorter objects
+- `preRender` will be called *before* the result list is rendered
+- `postRender` will be called *after* the result list is rendered
 
-Filtering works even on attributes that are arrays! But only with depth 1.
+### Filter objects
+Filter Objects are plain Javascript Objects that have a title, a compare function and a value function.
 
-#### Property
-The property to filter. This plugin automatically aggregates all possible value for this attribute and even displays the amount of matches next to the filter-value.
+The compare function is used to check if the selected values of the filter are matching on an item. If this function returns `true`, the item will be part of the newly rendered result list. Thus, a filter needs to know wether its values are fitting on an item or not.
 
-#### Label
-A label for the filter category
+The value function returns a list of objects or a string that determine which values an item actually has. This is used for rendering the filter column as you need to provide a label, a value and a priority for rendering.
 
-#### Logic
-A method that describes how the filter matches. Can be "or", "and" or "xor".
-Or means that an item matches a filter, if one or more condition fits.
-And means that an item matches a filter, if all condition fit.
-Xor means that only one filter value can be selected and an item has to fit on it to match [not supported yet].
+The title will be rendered over the list of values for the filter.
 
-## Customizing this plugin
-
-### Custom rendering for search results
-In `option`, provide: `renderItem: function(item) { ... }` and return a string that contains the full markup.
-
-### Custom sorting method
-In `option`, provide: `sortMethod: function(property) { ... }` that returns a function with two parameters `a`, `b` that compares two items on the given property.
-
-### Custom filter rendering
-In `option` provide: `renderFilter: function(propertyList) { ... }` that returns full markup as string for filter rendering
-`propertyList` is a javascript object, that looks like the following schema:
-
-```javascript
-propertyList = {
-  propertyname : { 
-    label : "label", 
-    characteristics : { valueA : 1, valueB : 5, valueC : 3 } /* value is the number of matches */
-  }
+Example for a filter (taken from demo):
+```
+{
+	title: "Genre",
+	compareFunction: function (obj, selectedValues) {
+		var match = false;
+		if(selectedValues.length === 0) { return true; }
+			for(var sv in selectedValues) {
+				if(obj.genres.indexOf(selectedValues[sv]) > -1) {
+					match = true;
+					break;
+				}
+			}
+		return match;
+	},
+	getValueFunction: function (obj) {
+		if(obj.genres.length === 0) {
+		return false;
+		}
+		return obj.genres;
+	}
 }
 ```
-## ToDo
-- Enable loading search results via AJAX request.
-- Add search parameters that loads new results via ajax and auto-updates DOM (with loading-indicator).
-
-## Bugs
-Please report any bug you see or fix it yourself and contribute :-)
