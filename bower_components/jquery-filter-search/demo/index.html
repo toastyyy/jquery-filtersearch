@@ -1,0 +1,111 @@
+<html>
+
+<head>
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="../jquery.filtersearch.min.js"></script>
+	<title>jquery-filtersearch Demo</title>
+	<style>
+		body {
+			background-color: #f1f1f1;
+		}
+		* {
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+		}
+		#wrapper {
+			width: 1000px;
+			margin: 100px auto 0px auto;
+		}
+		#filter-column {
+			width: 320px;
+			padding: 6px;
+			border-radius: 5px;
+			border: 1px solid #e1e1e1;
+			background-color: #fff;
+			float: left;
+		}
+		#sorter-column {
+			margin-left: 30px;
+			width: 650px;
+			background-color: #fff;
+			padding: 4px;
+			float: left;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="filter-column"></div>
+		<div id="sorter-column"></div>
+		<div id="search-results"></div>
+	</div>
+</body>
+
+<script>
+	var data = [
+		{ name : "Gravity", price: 9.99, genres: ["Sci-Fi", "Drama"], description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", rating: 4.7, year: 2013 },
+		{ name : "Despicable Me", price: 7.59, genres: ["Comedy", "Animation"], description: "", rating: 4.4, year: 2010 },
+		{ name : "We're the Millers", price: 11.28, genres: ["Comedy"], description: "", rating: 4.1, year: 2013 },
+		{ name : "Monsters University", price: 3.28, genres: ["Comedy", "Animation"], description: "", rating: 4.1, year: 2013 },
+		{ name : "Sherlock Holmes - A Game of Shadows", price: 7.35, genres: ["Thriller", "Action", "Adventure"], description: "", rating: 4.4, year: 2011 },
+		{ name : "Man of Steel", price: 9.27, genres: ["Sci-Fi", "Action"], description: "", rating: 1.4, year: 2013 },
+		{ name : "Fast Five", price: 14.27, genres: ["Action", "Thriller"], description: "", rating: 3.0, year: 2011 },
+		{ name : "Toy Story", price: 6.27, genres: ["Comedy", "Animation"], description: "", rating: 4.8, year: 1995 },
+		{ name : "Ratatouille", price: 4.22, genres: ["Comedy", "Animation"], description: "", rating: 4.6, year: 2007 },
+		{ name : "Pacific Rim", price: 2.27, genres: ["Action", "Sci-Fi"], description: "", rating: 4.1, year: 2013 },
+		{ name : "The Wolverine", price: 7.27, genres: ["Action", "Sci-Fi"], description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", rating: 4.0, year: 2013 },
+		{ name : "New Year's Eve", price: 3.27, genres: ["Romance", "Comedy"], description: "", rating: 4.1, year: 2011 },
+		{ name : "A Christmas Carol", price: 6.49, genres: ["Fantasy", "Animated"], description: "", rating: 4.3, year: 2009 },
+	];
+	
+	var filters = [];
+	
+	filters.push(
+		{
+			title: "Genre",
+			compareFunction: function (obj, selectedValues) {
+				var match = false;
+				if(selectedValues.length === 0) { return true; }
+				for(var sv in selectedValues) {
+					if(obj.genres.indexOf(selectedValues[sv]) > -1) {
+						match = true;
+						break;
+					}
+				}
+				return match;
+			},
+			getValueFunction: function (obj) {
+				if(obj.genres.length === 0) {
+					return false;
+				}
+				return obj.genres;
+			}
+		}
+	);
+	
+	function renderItem(item, opts) {
+		return '<div class="search-result">'
+					+ '<h3>'+item.name+'</h3>'
+					+ '<em>Genres: ' + item.genres.join(', ') + '</em><br>'
+					+ '<strong>Price: ' + item.price + '€</strong>' 
+					+ '<p>' + ((item.description != "") ? item.description : "No description available.") + '</p>'
+				+ '</div><hr>';
+	}
+	
+	$(document).ready(function() {
+		$("#search-results").filtersearch({
+			sortContainer: "#sorter-column",
+			paginationContainer: "#pagination-column",
+			filterContainer: "#filter-column",
+			data: data,
+			renderItem: renderItem,
+			pagination: 5,
+			filterList: filters,
+			sorterList: [],
+			preRender: function(opts) {},
+			postRender: function(opts) {}
+		});
+	});
+</script>
+</html>
